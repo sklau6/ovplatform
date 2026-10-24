@@ -1,0 +1,11 @@
+import { chromium } from 'playwright-core'
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox'] })
+const page = await browser.newPage({ viewport: { width: 390, height: 844 } })
+await page.goto('http://127.0.0.1:4320/#/', { waitUntil: 'domcontentloaded' })
+await page.waitForTimeout(2000)
+console.log(await page.evaluate(() => [...document.querySelectorAll('.app-sidebar button')].map(b=>({label:b.getAttribute('aria-label'), text:b.textContent?.slice(0,20), cls:b.className})).slice(0,4)))
+await page.getByRole('banner').getByRole('button', { name: 'Open navigation' }).click()
+await page.waitForTimeout(800)
+console.log('open x', await page.evaluate(()=>document.querySelector('.app-sidebar')?.getBoundingClientRect().x))
+console.log(await page.evaluate(() => [...document.querySelectorAll('.app-sidebar button')].map(b=>({label:b.getAttribute('aria-label'), cls:b.className})).slice(0,4)))
+await browser.close()

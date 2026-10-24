@@ -1,0 +1,13 @@
+import { chromium } from 'playwright-core'
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox','--hide-scrollbars'] })
+const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } })
+await page.goto('http://127.0.0.1:4310/#/engineering', { waitUntil: 'domcontentloaded' })
+await page.waitForTimeout(10000)
+await page.screenshot({ path: '.shots/engineering-v3.png' })
+await page.getByText('Foundation inset', { exact: true }).click()
+await page.waitForTimeout(9000)
+await page.screenshot({ path: '.shots/engineering-foundation3.png' })
+await page.getByRole('tab', { name: 'Harbour link', exact: true }).click()
+await page.waitForTimeout(10000)
+await page.screenshot({ path: '.shots/engineering-bridge3.png' })
+await browser.close()

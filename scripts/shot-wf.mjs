@@ -1,0 +1,11 @@
+import { chromium } from 'playwright-core';
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox','--hide-scrollbars'] });
+const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
+page.on('pageerror', e => console.log('PAGEERR', e.message));
+page.on('console', m => { if (m.type()==='error') console.log('CONSOLE', m.text()); });
+await page.goto('http://127.0.0.1:4310/#/bim-workflows', { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(5000);
+console.log(await page.evaluate(() => ({ h: document.body.scrollHeight, w: document.body.scrollWidth, canvas: document.querySelector('canvas')?.getBoundingClientRect().toJSON() })));
+await page.screenshot({ path: '.shots/bim-workflows.png', timeout: 90000 });
+console.log('shot ok');
+await browser.close();

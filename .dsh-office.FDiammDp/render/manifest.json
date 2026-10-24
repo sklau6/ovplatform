@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "backend": "native",
+  "rasterEngine": "libreoffice",
+  "source": "saved",
+  "inputPath": "/Users/tlau/src/DeepseekHarness/ovplatform/Ophylla_Ventures_OS_Platform_Overview.pptx",
+  "sourceSha256": "fe0c6d4c3a9e61ed607fb8b83148340a1113fbf2d9e3ed081af580d5e7a53876",
+  "dpi": 144,
+  "pageCount": 22,
+  "images": [
+    {
+      "index": 1,
+      "page": 1,
+      "path": "/Users/tlau/src/DeepseekHarness/ovplatform/.dsh-office.FDiammDp/render/page-0001.png",
+      "width": 1920,
+      "height": 1081,
+      "rectangle": {
+        "x": 0,
+        "y": 0,
+        "width": 1280,
+        "height": 720.0666666666667
+      },
+      "byteLength": 385621
+    }
+  ],
+  "missingFonts": [
+    "SF Mono"
+  ]
+}

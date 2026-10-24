@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.shots/
+.chrome/
+.chrome-sw/
+*.tsbuildinfo
+.DS_Store
+.playwright/

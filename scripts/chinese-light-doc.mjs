@@ -1,0 +1,13 @@
+import { chromium } from 'playwright-core'
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox','--hide-scrollbars'] })
+const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } })
+await page.goto('http://127.0.0.1:4310/#/', { waitUntil: 'domcontentloaded' })
+await page.waitForTimeout(6500)
+await page.getByRole('button', { name: /Language|语言|語言/i }).click()
+await page.waitForTimeout(250)
+await page.getByRole('button', { name: /简体中文/ }).click()
+await page.waitForTimeout(700)
+await page.getByRole('button', { name: /Switch to light theme|切换至浅色|切換至淺色/ }).click()
+await page.waitForTimeout(900)
+await page.screenshot({ path: 'docs/chinese-light.png' })
+await browser.close()

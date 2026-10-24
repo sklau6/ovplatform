@@ -1,0 +1,20 @@
+import { chromium } from 'playwright-core'
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox','--hide-scrollbars'] })
+// Light theme in Simplified Chinese
+const ctx1 = await browser.newContext({ viewport: { width: 1600, height: 1000 } })
+const p1 = await ctx1.newPage()
+await p1.addInitScript(() => { localStorage.setItem('ophylla-theme','light'); localStorage.setItem('ophylla-locale','zh-Hans') })
+await p1.goto('http://127.0.0.1:4310/#/construction', { waitUntil: 'domcontentloaded' })
+await p1.waitForTimeout(7000)
+await p1.screenshot({ path: 'docs/chinese-light.png' })
+await ctx1.close()
+// Dark theme typhoon
+const ctx2 = await browser.newContext({ viewport: { width: 1600, height: 1000 } })
+const p2 = await ctx2.newPage()
+await p2.addInitScript(() => { localStorage.setItem('ophylla-theme','dark'); localStorage.setItem('ophylla-locale','en') })
+await p2.goto('http://127.0.0.1:4310/#/twin', { waitUntil: 'domcontentloaded' })
+await p2.waitForTimeout(6500)
+await p2.getByRole('button', { name: 'Typhoon', exact: true }).click()
+await p2.waitForTimeout(2500)
+await p2.screenshot({ path: 'docs/typhoon-twin.png' })
+await browser.close()

@@ -1,0 +1,22 @@
+import { chromium } from 'playwright-core'
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox','--hide-scrollbars'] })
+const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } })
+const errors = []
+page.on('pageerror', e => errors.push(e.message))
+page.on('console', m => { if (m.type() === 'error') errors.push(m.text()) })
+await page.goto('http://127.0.0.1:4310/#/engineering', { waitUntil: 'domcontentloaded' })
+await page.waitForTimeout(5000)
+// click a visible tower member around the lower frame
+await page.mouse.click(640, 470)
+await page.waitForTimeout(1200)
+await page.screenshot({ path: '.shots/engineering-member.png' })
+await page.getByRole('tab', { name: 'Harbour link', exact: true }).click()
+await page.waitForTimeout(2500)
+await page.screenshot({ path: '.shots/engineering-bridge.png' })
+await page.getByRole('tab', { name: 'Tower frame', exact: true }).click()
+await page.waitForTimeout(2200)
+await page.getByText('Foundation inset', { exact: true }).click()
+await page.waitForTimeout(1800)
+await page.screenshot({ path: '.shots/engineering-foundation.png' })
+console.log(JSON.stringify({ errors: errors.slice(0, 8) }, null, 2))
+await browser.close()

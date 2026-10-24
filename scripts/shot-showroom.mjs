@@ -1,0 +1,10 @@
+import { chromium } from 'playwright-core';
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox','--hide-scrollbars'] });
+const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
+await page.goto('http://127.0.0.1:4310/#/vehicles', { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(2500);
+await page.getByText('Graphite', { exact: true }).click();
+await page.getByText('Profile', { exact: true }).click();
+await page.waitForTimeout(2000);
+await page.screenshot({ path: '.shots/vehicles-profile.png' });
+await browser.close();

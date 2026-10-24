@@ -1,0 +1,10 @@
+import { chromium } from 'playwright-core'
+const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true, args: ['--use-angle=swiftshader','--enable-unsafe-swiftshader','--no-sandbox','--hide-scrollbars'] })
+const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } })
+await page.goto('http://127.0.0.1:4310/#/', { waitUntil: 'domcontentloaded' })
+await page.waitForTimeout(2500)
+await page.getByRole('banner').getByRole('button', { name: 'Open navigation' }).click()
+await page.waitForTimeout(500)
+await page.addStyleTag({ content: '.fixed.inset-0.z-40{display:none!important}' })
+await page.screenshot({ path: '.shots/deck-nav-open.png' })
+await browser.close()
